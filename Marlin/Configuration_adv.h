@@ -1210,8 +1210,10 @@
     #define Z_HOMING_SENSITIVITY  40
     #undef X_HOME_BUMP_MM
     #undef Y_HOME_BUMP_MM
+    #undef Z_HOME_BUMP_MM
     #define X_HOME_BUMP_MM 0
     #define Y_HOME_BUMP_MM 0
+    #define Z_HOME_BUMP_MM 0
   #endif
 
   /**

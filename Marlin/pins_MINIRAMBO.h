@@ -70,8 +70,8 @@
 #define E0_DIR_PIN         43
 #define E0_ENABLE_PIN      26
 
-#if ENABLED(HAVE_TMC2130)
-  #if ENABLED(Z2_IS_TMC2130)
+#if HAS_DRIVER(TMC2130)
+  #if AXIS_DRIVER_TYPE(Z2, TMC2130)
     #define Z2_DIR_PIN         21 // SCL
     #define Z2_STEP_PIN        20 // SDA
     #define Z2_ENABLE_PIN      32 // PC5
