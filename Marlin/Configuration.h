@@ -131,7 +131,7 @@
 // The following define selects which electronics board you have.
 // Please choose the name from boards.h that matches your setup
 #ifndef MOTHERBOARD
-  #define MOTHERBOARD BOARD_MINIRAMBO
+  #define MOTHERBOARD BOARD_RAMPS_14_EFB
 #endif
 
 // Optional custom name for your RepStrap or other custom machine
@@ -394,10 +394,15 @@
   //#define DEFAULT_Ki 2.25
   //#define DEFAULT_Kd 440
 
-  #define  DEFAULT_Kp 40.925
-  #define  DEFAULT_Ki 4.875
-  #define  DEFAULT_Kd 86.085
+  // #define  DEFAULT_Kp 40.925
+  // #define  DEFAULT_Ki 4.875
+  // #define  DEFAULT_Kd 86.085
 
+  #define  DEFAULT_Kp 27.25
+  #define  DEFAULT_Ki 2.26
+  #define  DEFAULT_Kd 82.04
+
+  // FIND YOUR OWN: "M303 E0 C8 S210" to run autotune on the extruder at 210 degrees C for 8 cycles.
 #endif // PIDTEMP
 
 //===========================================================================
@@ -445,11 +450,15 @@
   //#define DEFAULT_bedKi 1.41
   //#define DEFAULT_bedKd 1675.16
 
-  #define  DEFAULT_bedKp 126.13
-  #define  DEFAULT_bedKi 4.30
-  #define  DEFAULT_bedKd 924.76
+  // #define  DEFAULT_bedKp 126.13
+  // #define  DEFAULT_bedKi 4.30
+  // #define  DEFAULT_bedKd 924.76
 
-  // FIND YOUR OWN: "M303 E-1 C8 S90" to run autotune on the bed at 90 degreesC for 8 cycles.
+  #define  DEFAULT_bedKp 224.76
+  #define  DEFAULT_bedKi 15.33
+  #define  DEFAULT_bedKd 823.95
+
+  // FIND YOUR OWN: "M303 E-1 C8 S90" to run autotune on the bed at 90 degrees C for 8 cycles.
 #endif // PIDTEMPBED
 
 // @section extruder
@@ -538,7 +547,7 @@
 // Mechanical endstop with COM to ground and NC to Signal uses "false" here (most common setup).
 #define X_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop.
 #define Y_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop.
-#define Z_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop.
+#define Z_MIN_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
 #define X_MAX_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
 #define Y_MAX_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
 #define Z_MAX_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
@@ -706,7 +715,7 @@
  * disastrous consequences. Use with caution and do your homework.
  *
  */
-//#define Z_MIN_PROBE_ENDSTOP
+//#define Z_MIN_PROBE_ENDSTOP - TODO
 
 /**
  * Probe Type
@@ -738,7 +747,7 @@
 /**
  * The BLTouch probe uses a Hall effect sensor and emulates a servo.
  */
-//#define BLTOUCH
+//#define BLTOUCH - TODO
 #if ENABLED(BLTOUCH)
   //#define BLTOUCH_DELAY 375   // (ms) Enable and increase if needed
 #endif
@@ -834,7 +843,7 @@
 #define Z_PROBE_OFFSET_RANGE_MAX 20
 
 // Enable the M48 repeatability test to test probe accuracy
-//#define Z_MIN_PROBE_REPEATABILITY_TEST
+//#define Z_MIN_PROBE_REPEATABILITY_TEST - TODO
 
 // For Inverting Stepper Enable Pins (Active Low) use 0, Non Inverting (Active High) use 1
 // :{ 0:'Low', 1:'High' }
@@ -1669,7 +1678,7 @@
 // RepRapDiscount FULL GRAPHIC Smart Controller
 // http://reprap.org/wiki/RepRapDiscount_Full_Graphic_Smart_Controller
 //
-//#define REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER
+///#define REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER
 
 //
 // ReprapWorld Graphical LCD

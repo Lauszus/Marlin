@@ -237,7 +237,7 @@
  * Multiple extruders can be assigned to the same pin in which case
  * the fan will turn on when any selected extruder is above the threshold.
  */
-#define E0_AUTO_FAN_PIN 8
+#define E0_AUTO_FAN_PIN RAMPS_D9_PIN
 #define E1_AUTO_FAN_PIN -1
 #define E2_AUTO_FAN_PIN -1
 #define E3_AUTO_FAN_PIN -1
@@ -253,7 +253,7 @@
  * The multiplexer is automatically switched at tool-change.
  * Set FANMUX[012]_PINs below for up to 2, 4, or 8 multiplexed fans.
  */
-#define FANMUX0_PIN -1
+#define FANMUX0_PIN 12
 #define FANMUX1_PIN -1
 #define FANMUX2_PIN -1
 
@@ -1102,13 +1102,13 @@
   #define HOLD_MULTIPLIER    0.5  // Scales down the holding current from run current
   #define INTERPOLATE       true  // Interpolate X/Y/Z_MICROSTEPS to 256
 
-  #define X_CURRENT          800  // rms current in mA. Multiply by 1.41 for peak current.
+  #define X_CURRENT          382  // rms current in mA. Multiply by 1.41 for peak current.
   #define X_MICROSTEPS        16  // 0..256
 
-  #define Y_CURRENT          800
+  #define Y_CURRENT          382 // 382 * sqrt(2) ~= 540
   #define Y_MICROSTEPS        16
 
-  #define Z_CURRENT          800
+  #define Z_CURRENT          354 // 354 * sqrt(2) ~= 500
   #define Z_MICROSTEPS        16
 
   #define X2_CURRENT         800
@@ -1117,10 +1117,10 @@
   #define Y2_CURRENT         800
   #define Y2_MICROSTEPS       16
 
-  #define Z2_CURRENT         800
+  #define Z2_CURRENT         354 // 354 * sqrt(2) ~= 500
   #define Z2_MICROSTEPS       16
 
-  #define E0_CURRENT         800
+  #define E0_CURRENT         354 // 354 * sqrt(2) ~= 500
   #define E0_MICROSTEPS       16
 
   #define E1_CURRENT         800
@@ -1140,7 +1140,7 @@
    * The default SW SPI pins are defined the respective pins files,
    * but you can override or define them here.
    */
-  //#define TMC_USE_SW_SPI
+  #define TMC_USE_SW_SPI
   //#define TMC_SW_MOSI       -1
   //#define TMC_SW_MISO       -1
   //#define TMC_SW_SCK        -1
@@ -1176,7 +1176,7 @@
    * STEALTHCHOP needs to be enabled.
    * M913 X/Y/Z/E to live tune the setting
    */
-  //#define HYBRID_THRESHOLD
+  #define HYBRID_THRESHOLD
 
   #define X_HYBRID_THRESHOLD     100  // [mm/s]
   #define X2_HYBRID_THRESHOLD    100
@@ -1207,13 +1207,13 @@
   #if ENABLED(SENSORLESS_HOMING)
     #define X_HOMING_SENSITIVITY  30
     #define Y_HOMING_SENSITIVITY  40
-    #define Z_HOMING_SENSITIVITY  40
+    //#define Z_HOMING_SENSITIVITY  40
     #undef X_HOME_BUMP_MM
     #undef Y_HOME_BUMP_MM
-    #undef Z_HOME_BUMP_MM
+    //#undef Z_HOME_BUMP_MM
     #define X_HOME_BUMP_MM 0
     #define Y_HOME_BUMP_MM 0
-    #define Z_HOME_BUMP_MM 0
+    //#define Z_HOME_BUMP_MM 0
   #endif
 
   /**

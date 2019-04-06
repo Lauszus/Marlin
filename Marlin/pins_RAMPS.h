@@ -75,14 +75,14 @@
 #endif
 #define Y_MIN_PIN          14
 #define Y_MAX_PIN          15
-#define Z_MIN_PIN          18
-#define Z_MAX_PIN          19
+#define Z_MIN_PIN          19
+#define Z_MAX_PIN          18
 
 //
 // Z Probe (when not Z_MIN_PIN)
 //
 #ifndef Z_MIN_PROBE_PIN
-  #define Z_MIN_PROBE_PIN  32
+  #define Z_MIN_PROBE_PIN  32 // TODO
 #endif
 
 //
@@ -91,15 +91,19 @@
 #define X_STEP_PIN         54
 #define X_DIR_PIN          55
 #define X_ENABLE_PIN       38
-#ifndef X_CS_PIN
-  #define X_CS_PIN         53
+#if DISABLED(USE_XMAX_PLUG)
+#define X_CS_PIN           2 // X_MAX_PIN
+#else
+#define X_CS_PIN           53
 #endif
 
 #define Y_STEP_PIN         60
 #define Y_DIR_PIN          61
 #define Y_ENABLE_PIN       56
-#ifndef Y_CS_PIN
-  #define Y_CS_PIN         49
+#if DISABLED(USE_YMAX_PLUG)
+#define Y_CS_PIN           15 // Y_MAX_PIN
+#else
+#define Y_CS_PIN           49
 #endif
 
 #define Z_STEP_PIN         46
@@ -116,11 +120,16 @@
   #define E0_CS_PIN        42
 #endif
 
-#define E1_STEP_PIN        36
-#define E1_DIR_PIN         34
-#define E1_ENABLE_PIN      30
-#ifndef E1_CS_PIN
-  #define E1_CS_PIN        44
+#if HAS_DRIVER(TMC2130) && AXIS_DRIVER_TYPE(Z2, TMC2130)
+  #define Z2_STEP_PIN     36
+  #define Z2_DIR_PIN      34
+  #define Z2_ENABLE_PIN   30
+  #define Z2_CS_PIN       65
+#else
+  #define E1_STEP_PIN     36
+  #define E1_DIR_PIN      34
+  #define E1_ENABLE_PIN   30
+  #define E1_CS_PIN       44
 #endif
 
 /**
@@ -257,7 +266,7 @@
 
 #ifndef FAN_PIN
   #if ENABLED(IS_RAMPS_EFB) || ENABLED(IS_RAMPS_EFF)  // Hotend, Fan, Bed or Hotend, Fan, Fan
-    #define FAN_PIN        RAMPS_D9_PIN
+    #define FAN_PIN        12
   #elif ENABLED(IS_RAMPS_EEF) || ENABLED(IS_RAMPS_SF) // Hotend, Hotend, Fan or Spindle, Fan
     #define FAN_PIN        RAMPS_D8_PIN
   #elif ENABLED(IS_RAMPS_EEB)                         // Hotend, Hotend, Bed
