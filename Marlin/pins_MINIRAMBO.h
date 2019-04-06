@@ -38,11 +38,11 @@
 // Limit Switches
 //
 #define X_MIN_PIN          12
-#define X_MAX_PIN          30
+#define X_MAX_PIN          -1//30
 #define Y_MIN_PIN          11
-#define Y_MAX_PIN          24
+#define Y_MAX_PIN          -1//24
 #define Z_MIN_PIN          10
-#define Z_MAX_PIN          23
+#define Z_MAX_PIN          -1//23
 
 //
 // Z Probe (when not Z_MIN_PIN)
@@ -70,31 +70,49 @@
 #define E0_DIR_PIN         43
 #define E0_ENABLE_PIN      26
 
-// Microstepping pins - Mapping not from fastio.h (?)
-#define X_MS1_PIN          40
-#define X_MS2_PIN          41
-#define Y_MS1_PIN          69
-#define Y_MS2_PIN          39
-#define Z_MS1_PIN          68
-#define Z_MS2_PIN          67
-#define E0_MS1_PIN         65
-#define E0_MS2_PIN         66
+#if ENABLED(HAVE_TMC2130)
+  #if ENABLED(Z2_IS_TMC2130)
+    #define Z2_DIR_PIN         21 // SCL
+    #define Z2_STEP_PIN        20 // SDA
+    #define Z2_ENABLE_PIN      32 // PC5
 
-#define MOTOR_CURRENT_PWM_XY_PIN 46
-#define MOTOR_CURRENT_PWM_Z_PIN  45
-#define MOTOR_CURRENT_PWM_E_PIN  44
-// Motor current PWM conversion, PWM value = MotorCurrentSetting * 255 / range
-#ifndef MOTOR_CURRENT_PWM_RANGE
-  #define MOTOR_CURRENT_PWM_RANGE 2000
+    // Note that these pins have the wrong pin label on the schematic!
+    #define Z2_CS_PIN          16 // TX2
+  #endif
+
+  #define Z_CS_PIN           17 // RX2
+
+  #define X_CS_PIN           30 // X_MAX_PIN
+  #define Y_CS_PIN           24 // Y_MAX_PIN
+  #define E0_CS_PIN          23 // Z_MAX_PIN
+#else
+  // Microstepping pins - Mapping not from fastio.h (?)
+  #define X_MS1_PIN          40
+  #define X_MS2_PIN          41
+  #define Y_MS1_PIN          69
+  #define Y_MS2_PIN          39
+  #define Z_MS1_PIN          68
+  #define Z_MS2_PIN          67
+  #define E0_MS1_PIN         65
+  #define E0_MS2_PIN         66
+
+  #define MOTOR_CURRENT_PWM_XY_PIN 46
+  #define MOTOR_CURRENT_PWM_Z_PIN  45
+  #define MOTOR_CURRENT_PWM_E_PIN  44
+  // Motor current PWM conversion, PWM value = MotorCurrentSetting * 255 / range
+  #ifndef MOTOR_CURRENT_PWM_RANGE
+    #define MOTOR_CURRENT_PWM_RANGE 2000
+  #endif
+  //#define DEFAULT_PWM_MOTOR_CURRENT  {1300, 1300, 1250}
+  #define DEFAULT_PWM_MOTOR_CURRENT  { 540, 830, 500 }
 #endif
-#define DEFAULT_PWM_MOTOR_CURRENT  {1300, 1300, 1250}
 
 //
 // Temperature Sensors
 //
 #define TEMP_0_PIN          0   // Analog Input
-#define TEMP_1_PIN          1   // Analog Input
-#define TEMP_BED_PIN        2   // Analog Input
+#define TEMP_1_PIN          -1   // Analog Input
+#define TEMP_BED_PIN        2  // Analog Input
 
 //
 // Heaters / Fans
@@ -102,14 +120,14 @@
 #define HEATER_0_PIN        3
 #define HEATER_1_PIN        7
 #if !MB(MINIRAMBO_10A)
-  #define HEATER_2_PIN      6
+  #define HEATER_2_PIN      -1
 #endif
 #define HEATER_BED_PIN      4
 
 #ifndef FAN_PIN
-  #define FAN_PIN           8
+  #define FAN_PIN           6//8
 #endif
-#define FAN1_PIN            6
+#define FAN1_PIN            -1//6
 
 //
 // Misc. Functions
@@ -124,18 +142,20 @@
 // M3/M4/M5 - Spindle/Laser Control
 //
 // use P1 connector for spindle pins
-#define SPINDLE_LASER_PWM_PIN     9   // MUST BE HARDWARE PWM
-#define SPINDLE_LASER_ENABLE_PIN 18   // Pin should have a pullup!
-#define SPINDLE_DIR_PIN          19
+// #define SPINDLE_LASER_PWM_PIN     9   // MUST BE HARDWARE PWM
+// #define SPINDLE_LASER_ENABLE_PIN 18   // Pin should have a pullup!
+// #define SPINDLE_DIR_PIN          19
 
 //
 // Průša i3 MK2 Multiplexer Support
 //
-#define E_MUX0_PIN         17
-#define E_MUX1_PIN         16
-#if !MB(MINIRAMBO_10A)
-  #define E_MUX2_PIN       78   // 84 in MK2 Firmware, with BEEPER as 78
-#endif
+// #define E_MUX0_PIN         17
+// #define E_MUX1_PIN         16
+// #if !MB(MINIRAMBO_10A)
+//   #define E_MUX2_PIN       78   // 84 in MK2 Firmware, with BEEPER as 78
+// #endif
+
+//#define PS_ON_PIN          74
 
 //
 // LCD / Controller
@@ -143,7 +163,7 @@
 #if ENABLED(ULTRA_LCD)
 
   #if !MB(MINIRAMBO_10A)
-    #define KILL_PIN       32
+    #define KILL_PIN       -1
   #endif
 
   #if ENABLED(NEWPANEL)
@@ -168,21 +188,21 @@
     #else // !MINIRAMBO_10A
 
       // AUX-4
-      #define BEEPER_PIN   84
+      #define BEEPER_PIN   84 // PH2
 
       // AUX-2
-      #define BTN_EN1      14
-      #define BTN_EN2      72
-      #define BTN_ENC       9
+      #define BTN_EN1      72 // PJ2 //14
+      #define BTN_EN2      14 // TX3 //72
+      #define BTN_ENC       9 // PH6
 
-      #define LCD_PINS_RS  82
-      #define LCD_PINS_ENABLE 18
-      #define LCD_PINS_D4  19
-      #define LCD_PINS_D5  70
-      #define LCD_PINS_D6  85
-      #define LCD_PINS_D7  71
+      #define LCD_PINS_RS  82 // PD5
+      #define LCD_PINS_ENABLE 18 // TX1
+      #define LCD_PINS_D4  19 // RX1
+      #define LCD_PINS_D5  70 // PG4
+      #define LCD_PINS_D6  85 // PH7
+      #define LCD_PINS_D7  71 // PG3
 
-      #define SD_DETECT_PIN  15
+      #define SD_DETECT_PIN  15 // RX3
 
     #endif // !MINIRAMBO_10A
 
