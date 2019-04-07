@@ -85,8 +85,8 @@
 #endif
 #define Y_MIN_PIN          14
 #define Y_MAX_PIN          15
-#define Z_MIN_PIN          18
-#define Z_MAX_PIN          19
+#define Z_MIN_PIN          19
+#define Z_MAX_PIN          18
 
 //
 // Z Probe (when not Z_MIN_PIN)
@@ -126,11 +126,20 @@
   #define E0_CS_PIN        42
 #endif
 
-#define E1_STEP_PIN        36
-#define E1_DIR_PIN         34
-#define E1_ENABLE_PIN      30
-#ifndef E1_CS_PIN
-  #define E1_CS_PIN        44
+#if ENABLED(Z_DUAL_STEPPER_DRIVERS)
+  #define Z2_STEP_PIN     36
+  #define Z2_DIR_PIN      34
+  #define Z2_ENABLE_PIN   30
+  #ifndef Z2_CS_PIN
+    #define Z2_CS_PIN     44
+  #endif
+#else
+  #define E1_STEP_PIN     36
+  #define E1_DIR_PIN      34
+  #define E1_ENABLE_PIN   30
+  #ifndef E1_CS_PIN
+    #define E1_CS_PIN     44
+  #endif
 #endif
 
 //
@@ -199,6 +208,8 @@
     #define HEATER_1_PIN   MOSFET_D_PIN
   #endif
 #endif
+
+#define FAN_PIN            12
 
 #ifndef FAN_PIN
   #if EITHER(IS_RAMPS_EFB, IS_RAMPS_EFF)          // Hotend, Fan, Bed or Hotend, Fan, Fan
